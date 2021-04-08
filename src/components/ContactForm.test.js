@@ -164,3 +164,20 @@ test('renders all fields text when all fields are submitted.', async () => {
         expect(messageDisplay).toBeInTheDocument();
     });
 });
+
+test('renders "firstName must have at least 5 characters" if first name is not at least 5 characters long', async () => {
+    // Arrange
+    render(<ContactForm />);
+
+    // Act
+    const firstnameInput = screen.getByLabelText(/first name/i);
+    userEvent.type(firstnameInput, "jer");
+
+    // const button = screen.getByRole("button");
+    // userEvent.click(button);
+
+    const errorMessage = await screen.findByText(/firstName must have at least 5 characters/i);
+    
+    // // Assert
+    expect(errorMessage).toBeInTheDocument();
+});
